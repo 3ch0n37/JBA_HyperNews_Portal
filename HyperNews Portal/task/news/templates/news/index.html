@@ -1,0 +1,13 @@
+<h2>Hyper news</h2>
+
+{% for day, value in news %}
+    <h4>{{ day }}</h4>
+
+    <ul>
+        {% for story in value %}
+            <li><a target="_blank" href="/news/{{ story.link }}/">{{ story.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+<a href="/news/create/">Create</a>
