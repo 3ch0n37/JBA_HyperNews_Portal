@@ -10,7 +10,7 @@ from django.conf import settings
 # Create your views here.
 class IndexView(View):
     def get(self, request):
-        return HttpResponse('Coming soon')
+        return redirect('/news/')
 
 
 class MainView(View):
@@ -18,13 +18,18 @@ class MainView(View):
         with open(settings.NEWS_JSON_PATH) as f:
             news_list = json.load(f)
         news = {}
+        search = False
+        if 'q' in request.GET:
+            search = request.GET['q']
         for story in news_list:
+            if search and story['title'].find(search) == -1:
+                continue
             date = story['created'].split(' ')[0]
             if date not in news:
                 news[date] = []
             news[date].append(story)
         news = sorted(news.items(), reverse=True)
-        return render(request, 'news/index.html', context={'news': news})
+        return render(request, 'news/main.html', context={'news': news})
 
 
 class StoryView(View):
