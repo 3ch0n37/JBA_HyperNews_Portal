@@ -1,0 +1,18 @@
+<h2>Hyper news</h2>
+<form method="get" action="">
+    <label for="txtQuery">Search: </label>
+    <input type="text" name="q" id="txtQuery">
+    <button type="submit">Go</button>
+</form>
+<br>
+{% for day, value in news %}
+    <h4>{{ day }}</h4>
+
+    <ul>
+        {% for story in value %}
+            <li><a target="_blank" href="/news/{{ story.link }}/">{{ story.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+<a href="/news/create/">Create</a>
